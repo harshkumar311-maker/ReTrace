@@ -1,0 +1,13 @@
+# Java / Spring Boot
+target/
+data/
+uploads/
+
+# React / Node
+node_modules/
+dist/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example

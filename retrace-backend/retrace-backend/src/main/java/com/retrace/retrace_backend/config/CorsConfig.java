@@ -18,7 +18,9 @@ public class CorsConfig {
 
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://localhost:5173",
-                "http://localhost:5174"
+                "http://localhost:5174",
+                "http://localhost:5175",
+                "https://retrace-flec.onrender.com"
         ));
 
         configuration.setAllowedMethods(Arrays.asList(

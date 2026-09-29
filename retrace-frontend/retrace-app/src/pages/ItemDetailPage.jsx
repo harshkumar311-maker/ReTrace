@@ -4,7 +4,7 @@ import { fetchItem } from "../services/itemService";
 import { fetchMatchesForItem } from "../services/matchService";
 import { formatDate, formatTime, titleCase } from "../utils/format";
 
-const API_BASE_URL = "http://localhost:8080/api/images/items";
+const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api/images/items`;
 
 export default function ItemDetailPage() {
   const { id } = useParams();

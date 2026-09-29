@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/api";
+const API_URL = `${import.meta.env.VITE_API_URL}/api`;
 
 function getAuthHeaders() {
   const token = localStorage.getItem("token");
@@ -75,7 +75,6 @@ function normalizeMatch(match, lostItem) {
 }
 
 export async function fetchMatches() {
-  // Get ONLY the currently logged-in user's lost items
   const lostResponse = await fetch(`${API_URL}/items/my/lost`, {
     method: "GET",
     headers: getAuthHeaders(),

@@ -64,7 +64,7 @@ export default function Navbar() {
               {user.role === "ADMIN" && (
                 <Link
                   to="/admin"
-                  className="hidden text-sm font-medium text-ink-500 hover:text-ink-900 sm:block"
+                  className="text-sm font-medium text-ink-500 hover:text-ink-900"
                 >
                   Admin
                 </Link>

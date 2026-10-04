@@ -54,20 +54,16 @@ public class AuthService {
 
     public AuthResponse login(LoginRequest request) {
 
-        System.out.println("LOGIN EMAIL = [" + request.getEmail() + "]");
-
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() ->
-                        new RuntimeException("USER NOT FOUND")
+                        new RuntimeException("Invalid email or password")
                 );
-
-        System.out.println("USER FOUND = " + user.getEmail());
 
         if (!passwordEncoder.matches(
                 request.getPassword(),
                 user.getPassword()
         )) {
-            throw new RuntimeException("PASSWORD MISMATCH");
+            throw new RuntimeException("Invalid email or password");
         }
 
         String token = jwtService.generateToken(user.getEmail());

@@ -53,7 +53,8 @@ public class SecurityConfig {
 
                         // Uploaded item photos
                         .requestMatchers(
-                                "/uploads/**"
+                                "/uploads/**",
+                                "/health"
                         ).permitAll()
 
                         // Public item images

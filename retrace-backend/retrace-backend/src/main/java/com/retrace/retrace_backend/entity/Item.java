@@ -28,6 +28,7 @@ public class Item {
     private String subcategory;
     private String location;
     private String date;
+    private String time;
     private String brand;
     private String model;
     private String color;
@@ -109,6 +110,14 @@ public class Item {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getBrand() {

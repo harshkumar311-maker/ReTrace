@@ -18,6 +18,15 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ItemRequest {
 
+    @Size(max = 200, message = "Title must be at most 200 characters")
+    private String title;
+
+    @Size(max = 20, message = "Date must be at most 20 characters")
+    private String date;
+
+    @Size(max = 20, message = "Time must be at most 20 characters")
+    private String time;
+
     @NotBlank(message = "Category is required")
     @Size(max = 100, message = "Category must be at most 100 characters")
     private String category;

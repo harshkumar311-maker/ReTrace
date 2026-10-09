@@ -1,3 +1,4 @@
+
 package com.retrace.retrace_backend.service;
 
 import com.retrace.retrace_backend.dto.ItemRequest;
@@ -52,12 +53,15 @@ public class ItemServiceImpl implements ItemService {
 
         Item item = Item.builder()
                 .reportType(reportType)
+                .title(request.getTitle())
                 .category(request.getCategory())
                 .subcategory(request.getSubcategory())
                 .brand(request.getBrand())
                 .model(request.getModel())
                 .color(request.getColor())
                 .location(request.getLocation())
+                .date(request.getDate())
+                .time(request.getTime())
                 .description(request.getDescription())
                 .additionalDetails(request.getAdditionalDetails())
                 .status(ItemStatus.ACTIVE)
@@ -112,11 +116,9 @@ public class ItemServiceImpl implements ItemService {
                     continue;
                 }
 
-                String fileName =
-                        UUID.randomUUID() + extension;
+                String fileName = UUID.randomUUID() + extension;
 
-                Path target =
-                        uploadDirectory.resolve(fileName);
+                Path target = uploadDirectory.resolve(fileName);
 
                 Files.copy(
                         photo.getInputStream(),
@@ -231,9 +233,9 @@ public class ItemServiceImpl implements ItemService {
                         .getContext()
                         .getAuthentication();
 
-        if (authentication == null ||
-                !authentication.isAuthenticated() ||
-                authentication.getName() == null) {
+        if (authentication == null
+                || !authentication.isAuthenticated()
+                || authentication.getName() == null) {
 
             throw new RuntimeException(
                     "User is not authenticated"

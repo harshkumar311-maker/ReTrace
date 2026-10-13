@@ -1,4 +1,4 @@
-jsx
+
 import { useEffect, useState } from "react";
 import { fetchItem } from "../services/itemService";
 import {

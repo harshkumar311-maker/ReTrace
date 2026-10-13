@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { CATEGORIES, getCategory } from "../data/categories";
 import { useReportForm } from "../hooks/useReportForm";
@@ -18,14 +18,14 @@ export default function ReportFlowPage() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  useState(() => {
-    const t = params.get("type");
+  useEffect(() => {
+  const t = params.get("type");
 
-    if (t === "lost" || t === "found") {
-      form.setReportType(t);
-      form.setStep("category");
-    }
-  });
+  if (t === "lost" || t === "found") {
+    form.setReportType(t);
+    form.setStep("category");
+  }
+}, [params]);
 
   const category = form.categoryId
     ? getCategory(form.categoryId)

@@ -1,7 +1,70 @@
+jsx
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchLostItems, fetchFoundItems } from "../services/itemService";
+import {
+  fetchLostItems,
+  fetchFoundItems,
+} from "../services/itemService";
 import { formatDate, titleCase } from "../utils/format";
+
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
+function getImageUrl(url) {
+  if (!url) return "";
+
+  // Support both old and new image URL formats.
+  const filename = String(url).split("/").pop();
+
+  if (!filename) return "";
+
+  return `${API_BASE_URL}/api/images/items/${encodeURIComponent(filename)}`;
+}
+
+function ReportPhoto({ item }) {
+  const [failed, setFailed] = useState(false);
+
+  const imageUrl = Array.isArray(item.imageUrls)
+    ? getImageUrl(item.imageUrls[0])
+    : "";
+
+  if (!imageUrl) {
+    return (
+      <span className="text-xs text-ink-400">
+        No photo
+      </span>
+    );
+  }
+
+  if (failed) {
+    return (
+      <span className="text-xs text-red-500">
+        Photo unavailable
+      </span>
+    );
+  }
+
+  return (
+    <a href={imageUrl} target="_blank" rel="noreferrer">
+      <img
+        src={imageUrl}
+        alt={item.title || "Reported item"}
+        onError={() => setFailed(true)}
+        className="h-14 w-14 rounded-md border border-ink-100 object-cover"
+      />
+    </a>
+  );
+}
+
+function getItemTitle(item) {
+  return (
+    item.title ||
+    item.model ||
+    item.subcategory ||
+    item.category ||
+    item.brand ||
+    "Untitled item"
+  );
+}
 
 export default function AdminReportsPage() {
   const [items, setItems] = useState([]);
@@ -20,9 +83,9 @@ export default function AdminReportsPage() {
         ]);
 
         setItems([...lostItems, ...foundItems]);
-      } catch (error) {
-        console.error("Failed to load reports:", error);
-        setError("Failed to load reports.");
+      } catch (err) {
+        console.error("Failed to load reports:", err);
+        setError(err.message || "Failed to load reports.");
       } finally {
         setLoading(false);
       }
@@ -63,6 +126,7 @@ export default function AdminReportsPage() {
             <table className="w-full text-left text-sm">
               <thead className="bg-ink-50 text-xs uppercase tracking-wide text-ink-300">
                 <tr>
+                  <th className="px-4 py-3 font-medium">Photo</th>
                   <th className="px-4 py-3 font-medium">Item</th>
                   <th className="px-4 py-3 font-medium">Type</th>
                   <th className="px-4 py-3 font-medium">Category</th>
@@ -76,8 +140,12 @@ export default function AdminReportsPage() {
               <tbody className="divide-y divide-ink-100">
                 {items.map((item) => (
                   <tr key={item.id}>
+                    <td className="px-4 py-3">
+                      <ReportPhoto item={item} />
+                    </td>
+
                     <td className="px-4 py-3 font-medium text-ink-900">
-                      {item.title || item.model || "Untitled item"}
+                      {getItemTitle(item)}
                     </td>
 
                     <td className="px-4 py-3">

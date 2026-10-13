@@ -126,8 +126,9 @@ public class ItemServiceImpl implements ItemService {
                         StandardCopyOption.REPLACE_EXISTING
                 );
 
-                item.getImageUrls().add(
-                        "/uploads/items/" + fileName
+               item.getImageUrls().add(
+        "/api/images/items/" + fileName
+
                 );
             }
 
